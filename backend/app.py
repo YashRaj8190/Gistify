@@ -20,6 +20,9 @@ def summarize_video():
         return jsonify({"error": "Audio download failed"}), 500
 
     transcript = transcribe_audio(audio_path)
+    # print("=== RAW TRANSCRIPT ===")
+    # print(transcript[:1000])
+    # print("=== END ===")
     summary = summarize_text(transcript)
 
     if os.path.exists(audio_path):

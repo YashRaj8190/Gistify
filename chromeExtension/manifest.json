@@ -4,14 +4,32 @@
     "version": "1.0",
     "description": "Summarize YouTube videos using AI.",
     "permissions": [
-        "activeTab",
-        "scripting"
+        "tabs",
+        "storage",
+        "scripting",
+        "activeTab"
     ],
     "action": {
-        "default_popup": "popup.html",
-        "default_icon": "icon.png"
+        "default_title": "Summarize this video",
+        "default_icon": {
+            "16": "icon.png"
+        }
+    },
+    "background": {
+        "service_worker": "background.js"
     },
     "host_permissions": [
-        "https://www.youtube.com/*"
+        "http://127.0.0.1:5000/*",
+        "*://*.youtube.com/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "summary.html"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
     ]
 }
