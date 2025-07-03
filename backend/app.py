@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from utils import download_audio
 from transcribe import transcribe_audio
 from summarize import summarize_text
 import os
 
 app = Flask(__name__)
+CORS(app) 
 
 @app.route('/summarize', methods=['POST'])
 def summarize_video():
