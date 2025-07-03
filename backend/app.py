@@ -9,16 +9,20 @@ app = Flask(__name__)
 @app.route('/summarize', methods=['POST'])
 def summarize_video():
     data = request.get_json()
-    youtube_url = data.get("url")
+    url = data.get("url")
+    if not url:
+        return jsonify({"error": "No URL provided"}), 400
 
-    audio_path = download_audio(youtube_url)
+    audio_path = download_audio(url)
     if not audio_path:
         return jsonify({"error": "Audio download failed"}), 500
 
     transcript = transcribe_audio(audio_path)
     summary = summarize_text(transcript)
 
-    os.remove(audio_path)  # Clean up
+    if os.path.exists(audio_path):
+        os.remove(audio_path)
+
     return jsonify({"summary": summary})
 
 if __name__ == "__main__":
